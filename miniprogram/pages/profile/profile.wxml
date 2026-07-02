@@ -1,0 +1,64 @@
+<view class="profile-page">
+  <!-- 头部 -->
+  <view class="profile-header" style="padding-top: {{statusBarHeight}}px;">
+    <view class="header-bar">
+      <view class="header-back" bindtap="onBack">
+        <view class="back-arrow"></view>
+      </view>
+      <text class="header-title">个人中心</text>
+      <view style="width: 64rpx;"></view>
+    </view>
+  </view>
+
+  <!-- 用户信息 -->
+  <view class="user-card">
+    <view class="user-avatar">
+      <text class="avatar-text">{{user.name ? user.name[0] : '用'}}</text>
+    </view>
+    <view class="user-info">
+      <text class="user-name">{{user.name}}</text>
+      <text class="user-role">{{user.role}}</text>
+    </view>
+  </view>
+
+  <!-- 数据统计 -->
+  <view class="stats-section">
+    <view class="stats-title">数据统计</view>
+    <view class="stats-grid">
+      <view class="stat-item">
+        <text class="stat-num">{{stats.animalCount}}</text>
+        <text class="stat-label">动物档案</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-num">{{stats.bRecordCount}}</text>
+        <text class="stat-label">B超记录</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-num">{{stats.nonBRecordCount}}</text>
+        <text class="stat-label">非B超记录</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-num">{{stats.outcomeCount}}</text>
+        <text class="stat-label">妊娠结局</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 功能入口 -->
+  <view class="menu-section">
+    <view class="menu-row" bindtap="onHistoryTap">
+      <view class="menu-left">
+        <view class="menu-icon" style="background: #F0F5FF;">
+          <view class="icon-history-sm"></view>
+        </view>
+        <text class="menu-text">修改历史</text>
+      </view>
+      <text class="menu-arrow">›</text>
+    </view>
+  </view>
+
+  <!-- 版本信息 -->
+  <view class="version-info">
+    <text class="version-text">产科检查管理小程序 v1.0.0</text>
+  </view>
+</view>

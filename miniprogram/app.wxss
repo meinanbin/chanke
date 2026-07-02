@@ -1,0 +1,253 @@
+/* ===== 全局样式 ===== */
+page {
+  background-color: #f5f6fa;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 28rpx;
+  color: #333;
+  --primary: #4A90D9;
+  --primary-light: #E8F2FE;
+  --success: #52C41A;
+  --warning: #FAAD14;
+  --danger: #FF4D4F;
+  --info: #909399;
+  --border: #e8e8e8;
+  --bg: #f5f6fa;
+  --card-bg: #ffffff;
+  --text-main: #333333;
+  --text-secondary: #666666;
+  --text-placeholder: #999999;
+}
+
+/* 安全区域 */
+.safe-top {
+  height: env(safe-area-inset-top);
+}
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* 通用容器 */
+.container {
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* 卡片 */
+.card {
+  background: var(--card-bg);
+  border-radius: 16rpx;
+  padding: 32rpx;
+  margin: 24rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.06);
+}
+
+/* 状态标签 */
+.tag {
+  display: inline-block;
+  padding: 4rpx 16rpx;
+  border-radius: 8rpx;
+  font-size: 22rpx;
+  font-weight: 500;
+  line-height: 1.6;
+}
+.tag-pregnant { background: #FFF1F0; color: #FF4D4F; }
+.tag-not-pregnant { background: #F0F5FF; color: #4A90D9; }
+.tag-closed { background: #F5F5F5; color: #999; }
+.tag-locked { background: #FFF7E6; color: #FAAD14; }
+
+/* 按钮 */
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 12rpx;
+  padding: 24rpx 0;
+  text-align: center;
+  font-size: 32rpx;
+  font-weight: 500;
+  width: 100%;
+}
+.btn-primary[disabled] {
+  background: #b3d4f0;
+  color: rgba(255,255,255,0.7);
+}
+.btn-secondary {
+  background: #f0f0f0;
+  color: #666;
+  border: none;
+  border-radius: 12rpx;
+  padding: 24rpx 0;
+  text-align: center;
+  font-size: 32rpx;
+  width: 100%;
+}
+
+/* 表单 */
+.form-group {
+  background: #fff;
+  padding: 0 32rpx;
+  margin-bottom: 24rpx;
+}
+.form-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 28rpx 0;
+  border-bottom: 1rpx solid var(--border);
+  min-height: 48rpx;
+}
+.form-item:last-child { border-bottom: none; }
+.form-label {
+  width: 200rpx;
+  flex-shrink: 0;
+  font-size: 28rpx;
+  color: var(--text-main);
+  line-height: 1.8;
+  padding-top: 4rpx;
+}
+.form-label .required { color: var(--danger); margin-left: 4rpx; }
+.form-value {
+  flex: 1;
+  font-size: 28rpx;
+  color: var(--text-main);
+  line-height: 1.8;
+}
+.form-input {
+  flex: 1;
+  font-size: 28rpx;
+  color: var(--text-main);
+  height: 48rpx;
+}
+.form-placeholder { color: var(--text-placeholder); }
+.form-textarea {
+  flex: 1;
+  font-size: 28rpx;
+  color: var(--text-main);
+  min-height: 80rpx;
+  line-height: 1.6;
+}
+.form-item-column {
+  flex-direction: column;
+}
+.form-item-column .form-label {
+  width: 100%;
+  margin-bottom: 12rpx;
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120rpx 0;
+  color: var(--text-placeholder);
+}
+.empty-state .empty-icon {
+  font-size: 80rpx;
+  margin-bottom: 20rpx;
+}
+.empty-state .empty-text {
+  font-size: 28rpx;
+}
+
+/* 浮动新建按钮 */
+.fab {
+  position: fixed;
+  right: 40rpx;
+  bottom: 120rpx;
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 56rpx;
+  box-shadow: 0 6rpx 20rpx rgba(74, 144, 217, 0.4);
+  z-index: 100;
+}
+
+/* 通用间距 */
+.mt-16 { margin-top: 16rpx; }
+.mt-24 { margin-top: 24rpx; }
+.mt-32 { margin-top: 32rpx; }
+.mb-16 { margin-bottom: 16rpx; }
+.mb-24 { margin-bottom: 24rpx; }
+.flex-row { display: flex; align-items: center; }
+.flex-between { display: flex; align-items: center; justify-content: space-between; }
+.text-secondary { color: var(--text-secondary); }
+.text-danger { color: var(--danger); }
+.text-small { font-size: 24rpx; }
+
+/* ===== 标签式单选/多选 (全局) ===== */
+.multi-select-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+  width: 100%;
+  padding-top: 4rpx;
+}
+.select-tag {
+  padding: 12rpx 28rpx;
+  border-radius: 8rpx;
+  background: #f5f6fa;
+  font-size: 26rpx;
+  color: #666;
+  border: 2rpx solid transparent;
+  line-height: 1.4;
+  transition: all 0.2s;
+}
+.select-tag-active {
+  background: #E8F2FE;
+  color: #4A90D9;
+  border-color: #4A90D9;
+  font-weight: 500;
+}
+
+/* ===== 动物编号模糊搜索+下拉选择 (全局) ===== */
+.animal-search-wrap {
+  width: 100%;
+  position: relative;
+}
+.animal-search-input {
+  width: 100%;
+  font-size: 28rpx;
+  color: #333;
+  padding: 16rpx 20rpx;
+  background: #f5f6fa;
+  border-radius: 10rpx;
+  box-sizing: border-box;
+}
+.animal-dropdown-mask {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 99;
+}
+.animal-dropdown {
+  position: absolute;
+  top: calc(100% + 4rpx);
+  left: 0; right: 0;
+  background: #fff;
+  border-radius: 10rpx;
+  box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.12);
+  z-index: 100;
+  overflow: hidden;
+}
+.animal-dropdown-scroll {
+  max-height: 400rpx;
+}
+.animal-dropdown-item {
+  padding: 22rpx 20rpx;
+  font-size: 28rpx;
+  color: #333;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+.animal-dropdown-item:last-child { border-bottom: none; }
+.animal-dropdown-item:active { background: #f5f6fa; }
+.animal-dropdown-empty {
+  padding: 32rpx 20rpx;
+  font-size: 26rpx;
+  color: #999;
+  text-align: center;
+}

@@ -1,0 +1,149 @@
+<view class="form-page">
+  <!-- 自定义导航栏 -->
+  <view class="form-header" style="padding-top: {{statusBarHeight}}px;">
+    <view class="header-bar">
+      <view class="header-back" bindtap="onBack">
+        <view class="back-arrow"></view>
+      </view>
+      <text class="header-title">{{mode === 'create' ? '新建非B超检查' : mode === 'edit' ? '编辑非B超检查' : '非B超检查详情'}}</text>
+      <view style="width: 64rpx;"></view>
+    </view>
+  </view>
+  <view style="height: {{statusBarHeight + 44}}px;"></view>
+
+  <!-- 锁定提示 -->
+  <view wx:if="{{isLocked}}" class="lock-banner">
+    <text class="lock-text">🔒 该记录已被锁定（妊娠结局已登记），不可编辑</text>
+  </view>
+
+  <!-- 表单 -->
+  <view class="form-group">
+    <!-- 动物编号（模糊搜索+选择） -->
+    <view class="form-item form-item-animal">
+      <view class="form-label">动物编号<span class="required">*</span></view>
+      <view class="animal-search-wrap">
+        <input
+          class="form-input animal-search-input"
+          placeholder="输入编号搜索选择"
+          placeholder-class="form-placeholder"
+          value="{{form.animalId}}"
+          bindinput="onAnimalInput"
+          bindfocus="onAnimalFocus"
+          disabled="{{readOnly}}"
+        />
+        <view wx:if="{{showAnimalDropdown}}" class="animal-dropdown-mask" bindtap="onAnimalDropdownClose"></view>
+        <view wx:if="{{showAnimalDropdown}}" class="animal-dropdown">
+          <scroll-view scroll-y class="animal-dropdown-scroll">
+            <view wx:if="{{filteredAnimalList.length === 0}}" class="animal-dropdown-empty">
+              未找到匹配的动物档案
+            </view>
+            <view
+              class="animal-dropdown-item"
+              wx:for="{{filteredAnimalList}}"
+              wx:key="*this"
+              data-value="{{item}}"
+              catchtap="onAnimalDropdownSelect"
+            >{{item}}</view>
+          </scroll-view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 实际操作日期 -->
+    <view class="form-item">
+      <view class="form-label">操作日期<span class="required">*</span></view>
+      <picker mode="date" value="{{form.operationDate}}" bindchange="onDateChange" disabled="{{readOnly}}">
+        <view class="form-value {{form.operationDate ? '' : 'form-placeholder'}}">
+          {{form.operationDate || '请选择日期'}}
+        </view>
+      </picker>
+    </view>
+
+    <!-- 检查部位（多选） -->
+    <view class="form-item form-item-column">
+      <view class="form-label">检查部位<span class="required">*</span></view>
+      <view class="part-options">
+        <view
+          class="part-option {{form.examParts.indexOf(item) >= 0 ? 'selected' : ''}}"
+          wx:for="{{examPartOptions}}"
+          wx:key="*this"
+          data-value="{{item}}"
+          bindtap="onExamPartToggle"
+        >
+          {{item}}
+        </view>
+      </view>
+    </view>
+
+    <!-- 胎位（检查部位为胎位时显示） -->
+    <view wx:if="{{showFetalPosition}}" class="form-item form-item-column">
+      <view class="form-label">胎位<span class="required">*</span></view>
+      <view class="multi-select-wrap">
+        <view
+          class="select-tag {{form.fetalPosition === item ? 'select-tag-active' : ''}}"
+          wx:for="{{fetalPositionOptions}}"
+          wx:key="*this"
+          data-value="{{item}}"
+          bindtap="onFetalPositionTap"
+        >{{item}}</view>
+      </view>
+    </view>
+
+    <!-- 产道检查（检查部位为产道检查时显示） -->
+    <view wx:if="{{showCervicalCheck}}" class="form-item form-item-column">
+      <view class="form-label">产道检查<span class="required">*</span></view>
+      <view class="multi-select-wrap">
+        <view
+          class="select-tag {{form.cervicalCheck === item ? 'select-tag-active' : ''}}"
+          wx:for="{{cervicalCheckOptions}}"
+          wx:key="*this"
+          data-value="{{item}}"
+          bindtap="onCervicalCheckTap"
+        >{{item}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 备注 -->
+  <view class="form-group">
+    <view class="form-item form-item-column">
+      <view class="form-label">备注</view>
+      <textarea
+        class="form-textarea"
+        placeholder="请输入"
+        placeholder-class="form-placeholder"
+        value="{{form.remark}}"
+        bindinput="onRemarkInput"
+        disabled="{{readOnly}}"
+        auto-height
+      />
+    </view>
+  </view>
+
+  <!-- 提交按钮 -->
+  <view wx:if="{{!readOnly}}" class="form-actions">
+    <button class="btn-primary" bindtap="onSubmit">
+      {{mode === 'create' ? '提交' : '保存修改'}}
+    </button>
+  </view>
+
+  <!-- 修改原因弹窗 -->
+  <view wx:if="{{showReasonModal}}" class="modal-mask">
+    <view class="modal-content" catchtap="">
+      <view class="modal-title">请输入修改原因</view>
+      <textarea
+        class="reason-textarea"
+        placeholder="请填写修改原因（必填）"
+        placeholder-class="form-placeholder"
+        value="{{editReason}}"
+        bindinput="onReasonInput"
+        auto-focus
+        auto-height
+      />
+      <view class="modal-actions">
+        <button class="btn-secondary modal-btn" bindtap="onReasonCancel">取消</button>
+        <button class="btn-primary modal-btn" bindtap="onReasonConfirm">确认修改</button>
+      </view>
+    </view>
+  </view>
+</view>

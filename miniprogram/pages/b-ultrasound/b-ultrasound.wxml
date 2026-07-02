@@ -1,0 +1,55 @@
+<view class="b-list-page">
+  <nav-bar
+    search-key="{{searchKey}}"
+    placeholder="请输入动物编号"
+    bind:searchchange="onSearchChange"
+    bind:search="onSearch"
+    bind:filter="onFilter"
+  ></nav-bar>
+
+  <!-- 筛选面板 -->
+  <view wx:if="{{showFilter}}" class="filter-panel">
+    <view class="filter-item {{filterStatus === '' ? 'active' : ''}}" data-status="" bindtap="onFilterSelect">全部</view>
+    <view class="filter-item {{filterStatus === '在孕' ? 'active' : ''}}" data-status="在孕" bindtap="onFilterSelect">在孕</view>
+    <view class="filter-item {{filterStatus === '未孕' ? 'active' : ''}}" data-status="未孕" bindtap="onFilterSelect">未孕</view>
+  </view>
+
+  <!-- 列表 -->
+  <view class="list-area">
+    <view class="export-bar" wx:if="{{list.length > 0}}">
+      <text class="export-count">共 {{list.length}} 条记录</text>
+      <view class="export-btn" bindtap="onExport">
+        <text class="export-icon">📥</text>
+        <text>导出Excel</text>
+      </view>
+    </view>
+    <block wx:if="{{list.length > 0}}">
+      <view class="record-card" wx:for="{{list}}" wx:key="id" data-id="{{item.id}}" data-status="{{item.status}}" bindtap="onItemTap">
+        <view class="record-top">
+          <text class="record-animal">{{item.animalId}}</text>
+          <view class="record-tags">
+            <text class="tag tag-{{item.pregnancyStatus === '在孕' ? 'pregnant' : 'not-pregnant'}}">{{item.pregnancyStatus}}</text>
+            <text wx:if="{{item.status === '锁定'}}" class="tag tag-locked">🔒</text>
+          </view>
+        </view>
+        <view class="record-bottom">
+          <text class="record-date">{{item.operationDate}}</text>
+          <text wx:if="{{item.fetalStage}}" class="record-stage">{{item.fetalStage}}</text>
+          <text wx:if="{{item.standardAge}}" class="record-age">标准胎龄{{item.standardAge}}天</text>
+        </view>
+        <!-- 高风险标签 -->
+        <view class="record-tags" wx:if="{{item.riskTags && item.riskTags.length > 0}}">
+          <text wx:for="{{item.riskTags}}" wx:for-item="tag" wx:key="*this" class="tag tag-risk">{{tag}}</text>
+        </view>
+      </view>
+    </block>
+
+    <view wx:else class="empty-state">
+      <view class="empty-icon">🔬</view>
+      <text class="empty-text">暂无B超检查记录</text>
+    </view>
+  </view>
+
+  <!-- 新建按钮 -->
+  <view class="fab" bindtap="onCreate">+</view>
+</view>

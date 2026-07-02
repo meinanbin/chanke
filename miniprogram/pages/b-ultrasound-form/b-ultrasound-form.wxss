@@ -1,0 +1,209 @@
+.form-page { min-height: 100vh; padding-bottom: 160rpx; }
+
+/* 自定义导航栏 */
+.form-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  background: #fff;
+  z-index: 999;
+  box-shadow: 0 1rpx 6rpx rgba(0,0,0,0.04);
+}
+.header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 44px;
+  padding: 0 16rpx;
+}
+.header-back {
+  width: 64rpx;
+  height: 64rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.back-arrow {
+  width: 20rpx;
+  height: 20rpx;
+  border-left: 4rpx solid #333;
+  border-bottom: 4rpx solid #333;
+  transform: rotate(45deg);
+  margin-left: 6rpx;
+}
+.header-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+/* 锁定横幅 */
+.lock-banner {
+  background: #FFF7E6;
+  padding: 20rpx 32rpx;
+  text-align: center;
+}
+.lock-text {
+  font-size: 24rpx;
+  color: #FAAD14;
+}
+
+/* 表单 */
+.form-group {
+  background: #fff;
+  margin: 24rpx;
+  border-radius: 16rpx;
+  padding: 0 32rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.03);
+}
+.form-item {
+  display: flex;
+  align-items: center;
+  padding: 28rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+  min-height: 48rpx;
+}
+.form-item:last-child { border-bottom: none; }
+.form-item-column {
+  flex-direction: column;
+  align-items: flex-start;
+}
+.form-item-column .form-label {
+  margin-bottom: 16rpx;
+  width: auto;
+}
+.form-label {
+  width: 200rpx;
+  flex-shrink: 0;
+  font-size: 28rpx;
+  color: #333;
+  line-height: 1.6;
+}
+.required { color: #FF4D4F; margin-left: 4rpx; }
+.form-value {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333;
+  line-height: 1.6;
+}
+.form-placeholder { color: #bbb; }
+.readonly-value { color: #4A90D9; font-weight: 500; }
+.form-input {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333;
+  height: 48rpx;
+}
+.form-textarea {
+  width: 100%;
+  font-size: 28rpx;
+  color: #333;
+  min-height: 60rpx;
+  line-height: 1.6;
+}
+.input-suffix {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+.suffix-text {
+  font-size: 24rpx;
+  color: #999;
+  margin-left: 8rpx;
+  flex-shrink: 0;
+}
+
+/* 提交按钮 */
+.form-actions {
+  padding: 32rpx;
+}
+
+/* 弹窗 */
+.modal-mask {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-content {
+  width: 86%;
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 40rpx;
+}
+.modal-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 24rpx;
+  text-align: center;
+}
+.modal-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+  margin-bottom: 24rpx;
+}
+.modal-option {
+  padding: 16rpx 32rpx;
+  border-radius: 12rpx;
+  background: #f5f6fa;
+  font-size: 28rpx;
+  color: #666;
+}
+.modal-option.selected {
+  background: #E8F2FE;
+  color: #4A90D9;
+  border: 2rpx solid #4A90D9;
+}
+.checkmark {
+  font-size: 28rpx;
+  color: #4A90D9;
+  font-weight: 700;
+}
+.reason-textarea {
+  width: 100%;
+  min-height: 120rpx;
+  font-size: 28rpx;
+  padding: 20rpx;
+  background: #f5f6fa;
+  border-radius: 12rpx;
+  margin-bottom: 24rpx;
+  box-sizing: border-box;
+}
+.modal-actions {
+  display: flex;
+  gap: 24rpx;
+}
+.modal-btn {
+  flex: 1;
+  font-size: 28rpx;
+  padding: 20rpx 0;
+}
+
+/* ===== 标签式多选 (multi-select-wrap / select-tag) ===== */
+.multi-select-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+  width: 100%;
+  padding-top: 4rpx;
+}
+.select-tag {
+  padding: 12rpx 28rpx;
+  border-radius: 8rpx;
+  background: #f5f6fa;
+  font-size: 26rpx;
+  color: #666;
+  border: 2rpx solid transparent;
+  line-height: 1.4;
+  transition: all 0.2s;
+}
+.select-tag-active {
+  background: #E8F2FE;
+  color: #4A90D9;
+  border-color: #4A90D9;
+  font-weight: 500;
+}

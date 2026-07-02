@@ -1,0 +1,64 @@
+<view class="admin-lists-page">
+  <nav-bar
+    search-key="{{searchKey}}"
+    placeholder="搜索动物编号"
+    bind:searchchange="onSearchChange"
+    bind:search="onSearch"
+  ></nav-bar>
+
+  <!-- 类型切换 Tab -->
+  <view class="type-tabs">
+    <view class="type-tab {{listType === 'weak_monkey' ? 'type-tab-active' : ''}}" data-type="weak_monkey" bindtap="onSwitchType">弱猴清单</view>
+    <view class="type-tab {{listType === 'cesarean' ? 'type-tab-active' : ''}}" data-type="cesarean" bindtap="onSwitchType">剖腹产清单</view>
+  </view>
+
+  <!-- 顶部统计与操作 -->
+  <view class="top-bar">
+    <text class="top-stat">共 {{filteredList.length}} / {{rawList.length}} 条</text>
+    <view class="top-actions">
+      <view class="reload-btn" bindtap="onReload">🔄 重新加载</view>
+      <view class="add-btn" bindtap="onAdd">+ 添加</view>
+    </view>
+  </view>
+
+  <!-- 列表 -->
+  <view class="list-area">
+    <block wx:if="{{filteredList.length > 0}}">
+      <view class="list-item" wx:for="{{filteredList}}" wx:key="animalId">
+        <view class="item-main">
+          <text class="item-id">{{item.animalId}}</text>
+          <text class="item-time">{{item.addedAt}}</text>
+        </view>
+        <view class="item-actions">
+          <view class="item-del" data-id="{{item.animalId}}" catchtap="onDelete">删除</view>
+        </view>
+      </view>
+    </block>
+    <view wx:else class="empty-state">
+      <view class="empty-icon">📭</view>
+      <text class="empty-text">{{searchKey ? '未找到匹配的编号' : '清单为空'}}</text>
+      <text class="empty-hint" wx:if="{{!searchKey}}">点击右上角"添加"按钮新增</text>
+    </view>
+  </view>
+
+  <!-- 添加弹窗 -->
+  <view wx:if="{{showAddModal}}" class="modal-mask" bindtap="onCloseAddModal">
+    <view class="modal-content" catchtap="">
+      <view class="modal-title">添加动物编号</view>
+      <view class="modal-tip">清单类型：{{listType === 'weak_monkey' ? '弱猴' : '剖腹产'}}</view>
+      <input
+        class="modal-input"
+        type="text"
+        placeholder="请输入动物编号"
+        value="{{newAnimalId}}"
+        bindinput="onNewAnimalIdInput"
+        focus="{{showAddModal}}"
+        maxlength="10"
+      />
+      <view class="modal-actions">
+        <view class="modal-btn modal-btn-cancel" bindtap="onCloseAddModal">取消</view>
+        <view class="modal-btn modal-btn-confirm" bindtap="onConfirmAdd">确认添加</view>
+      </view>
+    </view>
+  </view>
+</view>

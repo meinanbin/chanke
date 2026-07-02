@@ -1,0 +1,260 @@
+.home-page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #4A90D9 0%, #5BA0E9 18%, #f5f6fa 18%);
+}
+
+/* 功能区域白色卡片包裹 */
+.menu-section {
+  background: #fff;
+  border-radius: 32rpx 32rpx 0 0;
+  margin-top: -40rpx;
+  padding-top: 40rpx;
+  padding-bottom: 20rpx;
+}
+.section-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #333;
+  padding: 0 40rpx 20rpx;
+}
+
+/* 菜单网格 */
+.menu-grid {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 28rpx 20rpx;
+  justify-content: space-between;
+}
+.menu-item {
+  width: 48%;
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 40rpx 24rpx 32rpx;
+  margin-bottom: 24rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.06);
+  border: 1rpx solid #f0f0f0;
+  transition: transform 0.15s;
+  position: relative;
+  overflow: hidden;
+}
+.menu-item::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 6rpx;
+  border-radius: 3rpx 3rpx 0 0;
+  background: var(--primary);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.menu-item:active {
+  transform: scale(0.97);
+}
+.menu-item:active::after {
+  opacity: 1;
+}
+.menu-icon-wrap {
+  width: 104rpx;
+  height: 104rpx;
+  border-radius: 28rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24rpx;
+}
+.menu-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8rpx;
+}
+.menu-subtitle {
+  font-size: 22rpx;
+  color: #999;
+}
+
+/* 图标 - 列表 */
+.icon-list {
+  width: 40rpx;
+  height: 36rpx;
+  border: 4rpx solid;
+  border-radius: 6rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 0 6rpx;
+}
+.icon-list-line {
+  height: 3rpx;
+  border-radius: 2rpx;
+}
+
+/* 图标 - B超 */
+.icon-ultrasound {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.ultrasound-screen {
+  width: 44rpx;
+  height: 32rpx;
+  border: 4rpx solid;
+  border-radius: 6rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ultrasound-wave {
+  width: 24rpx;
+  height: 12rpx;
+  border: 3rpx solid;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-radius: 0 0 12rpx 12rpx;
+}
+.ultrasound-stand {
+  width: 20rpx;
+  height: 6rpx;
+  border-radius: 2rpx;
+  margin-top: 4rpx;
+}
+
+/* 图标 - 听诊器 */
+.icon-stethoscope {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+.stetho-head {
+  width: 24rpx;
+  height: 24rpx;
+  border: 4rpx solid;
+  border-radius: 50%;
+}
+.stetho-tube {
+  width: 4rpx;
+  height: 16rpx;
+}
+.stetho-body {
+  width: 16rpx;
+  height: 16rpx;
+  border: 4rpx solid;
+  border-radius: 4rpx;
+}
+
+/* 图标 - 旗帜 */
+.icon-flag {
+  display: flex;
+  align-items: flex-start;
+}
+.flag-pole {
+  width: 4rpx;
+  height: 44rpx;
+  border-radius: 2rpx;
+}
+.flag-banner {
+  width: 28rpx;
+  height: 20rpx;
+  border-radius: 0 4rpx 4rpx 0;
+  margin-left: 4rpx;
+  margin-top: 4rpx;
+  opacity: 0.85;
+}
+
+/* 头部 */
+.home-header {
+  padding-bottom: 20rpx;
+}
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40rpx;
+  height: 88rpx;
+}
+.header-title {
+  flex: 1;
+}
+.app-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+}
+.header-avatar {
+  padding: 8rpx;
+}
+.avatar-circle {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3rpx solid rgba(255, 255, 255, 0.5);
+}
+.avatar-text {
+  font-size: 32rpx;
+  color: #fff;
+  font-weight: 600;
+}
+
+/* 快捷入口 */
+.quick-links {
+  display: flex;
+  justify-content: space-around;
+  padding: 24rpx 48rpx;
+}
+.quick-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.quick-link:active { opacity: 0.7; }
+.quick-link-icon {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12rpx;
+}
+.quick-link-text {
+  font-size: 24rpx;
+  color: #666;
+}
+
+/* 图标 - 个人 */
+.icon-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.profile-head {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+}
+.profile-body {
+  width: 28rpx;
+  height: 14rpx;
+  border-radius: 14rpx 14rpx 0 0;
+  margin-top: 4rpx;
+}
+
+/* 底部 */
+.home-footer {
+  text-align: center;
+  padding: 40rpx 0 60rpx;
+}
+.footer-text {
+  font-size: 22rpx;
+  color: #ccc;
+}

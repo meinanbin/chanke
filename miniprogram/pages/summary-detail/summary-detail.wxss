@@ -1,0 +1,209 @@
+.detail-page { min-height: 100vh; }
+
+/* 动物信息卡 */
+.animal-info-card {
+  background: #fff;
+  padding: 32rpx;
+  margin: 24rpx;
+  border-radius: 16rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.05);
+}
+.animal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.animal-id {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #333;
+}
+.status-tag {
+  font-size: 24rpx;
+  padding: 8rpx 24rpx;
+  border-radius: 8rpx;
+  font-weight: 500;
+}
+
+/* 卡片标题 */
+.card-title {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #333;
+}
+.title-dot {
+  width: 8rpx;
+  height: 28rpx;
+  border-radius: 4rpx;
+  margin-right: 16rpx;
+}
+
+/* 详情网格 */
+.detail-grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+.detail-item {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20rpx;
+}
+.detail-label {
+  font-size: 24rpx;
+  color: #999;
+  margin-bottom: 6rpx;
+}
+.detail-value {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+/* 历史记录区 */
+.history-section {
+  margin: 24rpx;
+  background: #fff;
+  border-radius: 16rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.05);
+}
+.tab-bar {
+  display: flex;
+  border-bottom: 1rpx solid #eee;
+}
+.tab-item {
+  flex: 1;
+  text-align: center;
+  padding: 24rpx 0;
+  font-size: 26rpx;
+  color: #999;
+  position: relative;
+}
+.tab-item.active {
+  color: #4A90D9;
+  font-weight: 600;
+}
+.tab-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 48rpx;
+  height: 4rpx;
+  background: #4A90D9;
+  border-radius: 2rpx;
+}
+
+.tab-content {
+  padding: 0 32rpx;
+}
+
+/* 历史记录项 */
+.history-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28rpx 0;
+  border-bottom: 1rpx solid #f5f5f5;
+}
+.history-item:last-child { border-bottom: none; }
+.history-item:active { opacity: 0.7; }
+.history-left {
+  flex: 1;
+}
+.history-date {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 500;
+  margin-bottom: 8rpx;
+}
+.history-info {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12rpx;
+}
+.history-tag {
+  font-size: 20rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 6rpx;
+}
+.tag-pregnant { background: #FFF1F0; color: #FF4D4F; }
+.tag-suspected { background: #FFFBE6; color: #FAAD14; }
+.tag-not-pregnant { background: #F0F5FF; color: #4A90D9; }
+.tag-locked { background: #FFF7E6; color: #FAAD14; }
+.history-info-text {
+  font-size: 24rpx;
+  color: #666;
+}
+.history-remark {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 8rpx;
+}
+.history-arrow {
+  font-size: 36rpx;
+  color: #ccc;
+}
+
+/* 历史记录中的高风险标签 */
+.history-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8rpx;
+  margin-top: 12rpx;
+}
+.history-risk-tag {
+  font-size: 20rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 6rpx;
+  background: #FFF1F0;
+  color: #FF4D4F;
+  border: 1rpx solid #FFA39E;
+}
+
+/* 最新记录卡片中的高风险标签 */
+.detail-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8rpx;
+  margin-top: 16rpx;
+  padding-top: 16rpx;
+  border-top: 1rpx solid #f5f5f5;
+}
+.detail-risk-tag {
+  font-size: 22rpx;
+  padding: 6rpx 16rpx;
+  border-radius: 8rpx;
+  background: #FFF1F0;
+  color: #FF4D4F;
+  border: 1rpx solid #FFA39E;
+}
+
+/* 弱猴：粉紫色高亮 */
+.detail-risk-tag.tag-weak,
+.history-risk-tag.tag-weak {
+  background: #FFF0F6;
+  color: #C41D7F;
+  border-color: #FFADD2;
+}
+
+/* 剖腹产史：蓝色高亮 */
+.detail-risk-tag.tag-cesarean,
+.history-risk-tag.tag-cesarean {
+  background: #F0F5FF;
+  color: #1D39C4;
+  border-color: #ADC6FF;
+}
+
+/* 顶部汇总标签：与列表页一致，不需要分隔线 */
+.summary-tags {
+  padding-top: 0;
+  border-top: none;
+  margin-top: 20rpx;
+}

@@ -1,0 +1,108 @@
+<view class="form-page">
+  <!-- 自定义导航栏 -->
+  <view class="form-header" style="padding-top: {{statusBarHeight}}px;">
+    <view class="header-bar">
+      <view class="header-back" bindtap="onBack">
+        <view class="back-arrow"></view>
+      </view>
+      <text class="header-title">妊娠结局登记</text>
+      <view style="width: 64rpx;"></view>
+    </view>
+  </view>
+  <view style="height: {{statusBarHeight + 44}}px;"></view>
+
+  <!-- 提示 -->
+  <view class="tip-banner">
+    <text class="tip-text">提交后将自动锁定该动物在结局日期前的所有B超及非B超记录</text>
+  </view>
+
+  <!-- 表单 -->
+  <view class="form-group">
+    <!-- 动物编号（模糊搜索+选择） -->
+    <view class="form-item form-item-animal">
+      <view class="form-label">动物编号<span class="required">*</span></view>
+      <view class="animal-search-wrap">
+        <input
+          class="form-input animal-search-input"
+          placeholder="输入编号搜索选择"
+          placeholder-class="form-placeholder"
+          value="{{form.animalId}}"
+          bindinput="onAnimalInput"
+          bindfocus="onAnimalFocus"
+        />
+        <view wx:if="{{showAnimalDropdown}}" class="animal-dropdown-mask" bindtap="onAnimalDropdownClose"></view>
+        <view wx:if="{{showAnimalDropdown}}" class="animal-dropdown">
+          <scroll-view scroll-y class="animal-dropdown-scroll">
+            <view wx:if="{{filteredAnimalList.length === 0}}" class="animal-dropdown-empty">
+              未找到匹配的动物档案
+            </view>
+            <view
+              class="animal-dropdown-item"
+              wx:for="{{filteredAnimalList}}"
+              wx:key="*this"
+              data-value="{{item}}"
+              catchtap="onAnimalDropdownSelect"
+            >{{item}}</view>
+          </scroll-view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 结局日期 -->
+    <view class="form-item">
+      <view class="form-label">结局日期<span class="required">*</span></view>
+      <picker mode="date" value="{{form.outcomeDate}}" bindchange="onDateChange">
+        <view class="form-value {{form.outcomeDate ? '' : 'form-placeholder'}}">
+          {{form.outcomeDate || '请选择日期'}}
+        </view>
+      </picker>
+    </view>
+
+    <!-- 类型 -->
+    <view class="form-item form-item-column">
+      <view class="form-label">类型<span class="required">*</span></view>
+      <view class="multi-select-wrap">
+        <view
+          class="select-tag {{form.type === item ? 'select-tag-active' : ''}}"
+          wx:for="{{typeOptions}}"
+          wx:key="*this"
+          data-value="{{item}}"
+          bindtap="onTypeTap"
+        >{{item}}</view>
+      </view>
+    </view>
+
+    <!-- 非正常登记说明 -->
+    <view wx:if="{{showAbnormalDesc}}" class="form-item form-item-column">
+      <view class="form-label">非正常登记说明<span class="required">*</span></view>
+      <textarea
+        class="form-textarea"
+        placeholder="请输入非正常登记说明"
+        placeholder-class="form-placeholder"
+        value="{{form.abnormalDescription}}"
+        bindinput="onAbnormalDescInput"
+        auto-height
+      />
+    </view>
+  </view>
+
+  <!-- 备注 -->
+  <view class="form-group">
+    <view class="form-item form-item-column">
+      <view class="form-label">备注</view>
+      <textarea
+        class="form-textarea"
+        placeholder="请输入"
+        placeholder-class="form-placeholder"
+        value="{{form.remark}}"
+        bindinput="onRemarkInput"
+        auto-height
+      />
+    </view>
+  </view>
+
+  <!-- 提交按钮 -->
+  <view class="form-actions">
+    <button class="btn-primary" bindtap="onSubmit">提交登记</button>
+  </view>
+</view>

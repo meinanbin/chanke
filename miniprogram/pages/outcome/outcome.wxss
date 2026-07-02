@@ -1,0 +1,52 @@
+.outcome-list-page { min-height: 100vh; }
+.list-area { padding: 24rpx; }
+
+.record-card {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 28rpx 32rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.04);
+}
+
+.record-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12rpx;
+}
+.record-animal {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: #333;
+}
+.record-tags {
+  display: flex;
+  gap: 8rpx;
+}
+.tag {
+  font-size: 22rpx;
+  padding: 4rpx 16rpx;
+  border-radius: 8rpx;
+}
+.tag-normal { background: #F6FFED; color: #52C41A; }
+.tag-abnormal { background: #FFF1F0; color: #FF4D4F; }
+.tag-warning { background: #FFF7E6; color: #FAAD14; }
+
+.record-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+.record-date {
+  font-size: 26rpx;
+  color: #999;
+}
+.record-desc {
+  font-size: 26rpx;
+  color: #FF4D4F;
+}
+.record-remark {
+  font-size: 24rpx;
+  color: #999;
+}

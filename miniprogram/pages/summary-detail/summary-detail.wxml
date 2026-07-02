@@ -1,0 +1,203 @@
+<view class="detail-page">
+  <nav-bar
+    search-key="{{animalId}}"
+    placeholder="动物编号"
+    show-filter="{{false}}"
+    bind:searchchange="onSearchChange"
+  ></nav-bar>
+
+  <!-- 动物基本信息 -->
+  <view class="animal-info-card">
+    <view class="animal-header">
+      <text class="animal-id">{{animalId}}</text>
+      <view class="status-tag tag-{{animal.status === '在孕' ? 'pregnant' : animal.status === '疑似怀孕' ? 'suspected' : animal.status === '未孕' ? 'not-pregnant' : 'closed'}}">
+        {{animal.status}}
+      </view>
+    </view>
+    <!-- 汇总高风险标签：与列表页保持一致 -->
+    <view wx:if="{{mergedRiskTags && mergedRiskTags.length > 0}}" class="detail-tags summary-tags">
+      <text class="detail-risk-tag {{tag === '弱猴' ? 'tag-weak' : tag === '剖腹产史' ? 'tag-cesarean' : ''}}"
+            wx:for="{{mergedRiskTags}}"
+            wx:for-item="tag"
+            wx:key="*this">{{tag}}</text>
+    </view>
+  </view>
+
+  <!-- 最新B超结果（在孕显示） -->
+  <view wx:if="{{animal.status === '在孕' && latestBRecord}}" class="card">
+    <view class="card-title">
+      <view class="title-dot" style="background: #FF6B6B;"></view>
+      <text>最新B超结果</text>
+    </view>
+    <view class="detail-grid">
+      <view class="detail-item">
+        <text class="detail-label">检查日期</text>
+        <text class="detail-value">{{latestBRecord.operationDate}}</text>
+      </view>
+      <view class="detail-item">
+        <text class="detail-label">标准胎龄</text>
+        <text class="detail-value">{{latestBRecord.standardAge || '-'}}天</text>
+      </view>
+      <view class="detail-item">
+        <text class="detail-label">计算胎龄</text>
+        <text class="detail-value">{{latestBRecord.calculatedAge || '-'}}天</text>
+      </view>
+      <view class="detail-item">
+        <text class="detail-label">胎儿阶段</text>
+        <text class="detail-value">{{latestBRecord.fetalStage || '-'}}</text>
+      </view>
+      <view class="detail-item" wx:if="{{latestBRecord.bpd}}">
+        <text class="detail-label">双顶径</text>
+        <text class="detail-value">{{latestBRecord.bpd}}cm</text>
+      </view>
+      <view class="detail-item" wx:if="{{latestBRecord.abdominalCircumference}}">
+        <text class="detail-label">腹围</text>
+        <text class="detail-value">{{latestBRecord.abdominalCircumference}}cm</text>
+      </view>
+      <view class="detail-item" wx:if="{{latestBRecord.fetalPosition}}">
+        <text class="detail-label">胎位</text>
+        <text class="detail-value">{{latestBRecord.fetalPosition}}</text>
+      </view>
+      <view class="detail-item" wx:if="{{latestBRecord.placentaPosition}}">
+        <text class="detail-label">胎盘位置</text>
+        <text class="detail-value">{{latestBRecord.placentaPositionText}}</text>
+      </view>
+      <view class="detail-item" wx:if="{{latestBRecord.fetalHeartStrength}}">
+        <text class="detail-label">胎心</text>
+        <text class="detail-value">{{latestBRecord.fetalHeartStrength}}{{latestBRecord.fetalHeartValue ? '(' + latestBRecord.fetalHeartValue + 'bpm)' : ''}}</text>
+      </view>
+    </view>
+    <!-- 高风险标签 -->
+    <view wx:if="{{latestBRecord.displayRiskTags && latestBRecord.displayRiskTags.length > 0}}" class="detail-tags">
+      <text class="detail-risk-tag {{tag === '弱猴' ? 'tag-weak' : tag === '剖腹产史' ? 'tag-cesarean' : ''}}"
+            wx:for="{{latestBRecord.displayRiskTags}}"
+            wx:for-item="tag"
+            wx:key="*this">{{tag}}</text>
+    </view>
+  </view>
+
+  <!-- 最新非B超结果（在孕显示） -->
+  <view wx:if="{{animal.status === '在孕' && latestNonBRecord}}" class="card">
+    <view class="card-title">
+      <view class="title-dot" style="background: #52C41A;"></view>
+      <text>最新非B超结果</text>
+    </view>
+    <view class="detail-grid">
+      <view class="detail-item">
+        <text class="detail-label">检查日期</text>
+        <text class="detail-value">{{latestNonBRecord.operationDate}}</text>
+      </view>
+      <view class="detail-item" wx:if="{{latestNonBRecord.fetalPosition}}">
+        <text class="detail-label">胎位</text>
+        <text class="detail-value">{{latestNonBRecord.fetalPosition}}</text>
+      </view>
+      <view class="detail-item" wx:if="{{latestNonBRecord.cervicalCheck}}">
+        <text class="detail-label">产道检查</text>
+        <text class="detail-value">{{latestNonBRecord.cervicalCheck}}</text>
+      </view>
+    </view>
+    <!-- 高风险标签 -->
+    <view wx:if="{{latestNonBRecord.displayRiskTags && latestNonBRecord.displayRiskTags.length > 0}}" class="detail-tags">
+      <text class="detail-risk-tag {{tag === '弱猴' ? 'tag-weak' : tag === '剖腹产史' ? 'tag-cesarean' : ''}}"
+            wx:for="{{latestNonBRecord.displayRiskTags}}"
+            wx:for-item="tag"
+            wx:key="*this">{{tag}}</text>
+    </view>
+  </view>
+
+  <!-- 历史记录Tabs -->
+  <view class="history-section">
+    <view class="tab-bar">
+      <view class="tab-item {{activeTab === 0 ? 'active' : ''}}" data-index="0" bindtap="onTabChange">
+        B超历史({{bHistory.length}})
+      </view>
+      <view class="tab-item {{activeTab === 1 ? 'active' : ''}}" data-index="1" bindtap="onTabChange">
+        非B超历史({{nonBHistory.length}})
+      </view>
+      <view class="tab-item {{activeTab === 2 ? 'active' : ''}}" data-index="2" bindtap="onTabChange">
+        妊娠结局({{outcomeHistory.length}})
+      </view>
+    </view>
+
+    <!-- B超历史 -->
+    <view wx:if="{{activeTab === 0}}" class="tab-content">
+      <block wx:if="{{bHistory.length > 0}}">
+        <view class="history-item" wx:for="{{bHistory}}" wx:key="id" data-id="{{item.id}}" data-status="{{item.status}}" bindtap="onBRecordTap">
+          <view class="history-left">
+            <view class="history-date">{{item.operationDate}}</view>
+            <view class="history-info">
+              <text class="history-tag tag-{{item.pregnancyStatus === '在孕' ? 'pregnant' : 'not-pregnant'}}">{{item.pregnancyStatus}}</text>
+              <text wx:if="{{item.status === '锁定'}}" class="history-tag tag-locked">🔒锁定</text>
+              <text wx:if="{{item.fetalStage}}" class="history-info-text">{{item.fetalStage}}</text>
+              <text wx:if="{{item.calculatedAge}}" class="history-info-text">胎龄{{item.calculatedAge}}天</text>
+            </view>
+            <!-- 高风险标签 -->
+            <view wx:if="{{item.displayRiskTags && item.displayRiskTags.length > 0}}" class="history-tags">
+              <text
+                  class="history-risk-tag {{tag === '弱猴' ? 'tag-weak' : tag === '剖腹产史' ? 'tag-cesarean' : ''}}"
+                  wx:for="{{item.displayRiskTags}}"
+                  wx:for-item="tag"
+                  wx:key="*this"
+              >{{tag}}</text>
+            </view>
+          </view>
+          <text class="history-arrow">›</text>
+        </view>
+      </block>
+      <view wx:else class="empty-state">
+        <view class="empty-icon">📭</view>
+        <text class="empty-text">暂无B超记录</text>
+      </view>
+    </view>
+
+    <!-- 非B超历史 -->
+    <view wx:if="{{activeTab === 1}}" class="tab-content">
+      <block wx:if="{{nonBHistory.length > 0}}">
+        <view class="history-item" wx:for="{{nonBHistory}}" wx:key="id" data-id="{{item.id}}" bindtap="onNonBRecordTap">
+          <view class="history-left">
+            <view class="history-date">{{item.operationDate}}</view>
+            <view class="history-info">
+              <text wx:if="{{item.status === '锁定'}}" class="history-tag tag-locked">🔒锁定</text>
+              <text wx:if="{{item.fetalPosition}}" class="history-info-text">胎位:{{item.fetalPosition}}</text>
+              <text wx:if="{{item.cervicalCheck}}" class="history-info-text">产道:{{item.cervicalCheck}}</text>
+            </view>
+            <!-- 高风险标签 -->
+            <view wx:if="{{item.displayRiskTags && item.displayRiskTags.length > 0}}" class="history-tags">
+              <text
+                  class="history-risk-tag {{tag === '弱猴' ? 'tag-weak' : tag === '剖腹产史' ? 'tag-cesarean' : ''}}"
+                  wx:for="{{item.displayRiskTags}}"
+                  wx:for-item="tag"
+                  wx:key="*this"
+              >{{tag}}</text>
+            </view>
+          </view>
+          <text class="history-arrow">›</text>
+        </view>
+      </block>
+      <view wx:else class="empty-state">
+        <view class="empty-icon">📭</view>
+        <text class="empty-text">暂无非B超记录</text>
+      </view>
+    </view>
+
+    <!-- 妊娠结局 -->
+    <view wx:if="{{activeTab === 2}}" class="tab-content">
+      <block wx:if="{{outcomeHistory.length > 0}}">
+        <view class="history-item outcome-item" wx:for="{{outcomeHistory}}" wx:key="id">
+          <view class="history-left">
+            <view class="history-date">{{item.outcomeDate}}</view>
+            <view class="history-info">
+              <text class="history-tag tag-{{item.type === '正常' ? 'not-pregnant' : 'pregnant'}}">{{item.type}}</text>
+              <text wx:if="{{item.isNormal === '否'}}" class="history-info-text text-danger">非正常登记</text>
+            </view>
+            <view wx:if="{{item.remark}}" class="history-remark">{{item.remark}}</view>
+          </view>
+        </view>
+      </block>
+      <view wx:else class="empty-state">
+        <view class="empty-icon">📭</view>
+        <text class="empty-text">暂无妊娠结局记录</text>
+      </view>
+    </view>
+  </view>
+</view>

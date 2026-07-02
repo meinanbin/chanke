@@ -1,0 +1,362 @@
+<view class="form-page">
+  <!-- 自定义导航栏 -->
+  <view class="form-header" style="padding-top: {{statusBarHeight || 20}}px;">
+    <view class="header-bar">
+      <view class="header-back" bindtap="onBack">
+        <view class="back-arrow"></view>
+      </view>
+      <text class="header-title">{{mode === 'create' ? '新建B超检查' : mode === 'edit' ? '编辑B超检查' : 'B超检查详情'}}</text>
+      <view style="width: 64rpx;"></view>
+    </view>
+  </view>
+  <view style="height: {{(statusBarHeight || 20) + 44}}px;"></view>
+
+  <!-- 锁定提示 -->
+  <view wx:if="{{isLocked}}" class="lock-banner">
+    <text class="lock-text">🔒 该记录已被锁定（妊娠结局已登记），不可编辑</text>
+  </view>
+
+  <!-- 表单 -->
+  <view class="form-group">
+    <!-- 动物编号 -->
+    <view class="form-item">
+      <view class="form-label">动物编号<span class="required">*</span></view>
+      <input
+        class="form-input"
+        placeholder="请输入5-8位动物编号"
+        placeholder-class="form-placeholder"
+        value="{{form.animalId}}"
+        bindinput="onAnimalIdInput"
+        bindblur="onAnimalIdBlur"
+        maxlength="8"
+        disabled="{{readOnly}}"
+      />
+    </view>
+
+    <!-- 实际操作日期 -->
+    <view class="form-item">
+      <view class="form-label">操作日期<span class="required">*</span></view>
+      <picker mode="date" value="{{datePickerValue}}" bindchange="onDateChange" disabled="{{readOnly}}">
+        <view class="form-value {{form.operationDate ? '' : 'form-placeholder'}}">
+          {{form.operationDate || '请选择日期'}}
+        </view>
+      </picker>
+    </view>
+
+    <!-- 妊娠状态 -->
+    <view class="form-item form-item-column">
+      <view class="form-label">妊娠状态<span class="required">*</span></view>
+      <view class="multi-select-wrap">
+        <view
+          class="select-tag {{form.pregnancyStatus === item ? 'select-tag-active' : ''}}"
+          wx:for="{{pregnancyStatusOptions}}"
+          wx:key="*this"
+          data-value="{{item}}"
+          bindtap="onPregnancyStatusTap"
+        >{{item}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 在孕字段 -->
+  <view wx:if="{{showPregnantFields}}" class="form-group">
+    <!-- 计算胎龄（只读） -->
+    <view class="form-item">
+      <view class="form-label">计算胎龄</view>
+      <view class="form-value readonly-value">
+        {{form.calculatedAge !== null ? form.calculatedAge + '天' : '自动计算'}}
+      </view>
+    </view>
+
+    <!-- 标准胎龄（只读） -->
+    <view class="form-item">
+      <view class="form-label">标准胎龄</view>
+      <view class="form-value readonly-value">
+        {{form.standardAge !== null ? form.standardAge + '天' : '自动计算'}}
+      </view>
+    </view>
+
+    <!-- 胎儿阶段 -->
+    <view class="form-item form-item-column">
+      <view class="form-label">胎儿阶段<span class="required">*</span></view>
+      <view class="multi-select-wrap">
+        <view
+          class="select-tag {{form.fetalStage === item ? 'select-tag-active' : ''}}"
+          wx:for="{{fetalStageOptions}}"
+          wx:key="*this"
+          data-value="{{item}}"
+          bindtap="onFetalStageTap"
+        >{{item}}</view>
+      </view>
+    </view>
+
+    <!-- 孕囊（胚种期） -->
+    <view wx:if="{{showGestationalSac}}" class="form-item">
+      <view class="form-label">孕囊(cm)</view>
+        <input
+          class="form-input"
+          type="digit"
+          placeholder="0~3"
+          placeholder-class="form-placeholder"
+          value="{{form.gestationalSac}}"
+          bindinput="onGestationalSacInput"
+          bindblur="onGestationalSacBlur"
+          disabled="{{readOnly}}"
+        />
+    </view>
+
+    <!-- 长径/顶臀径（胚胎期） -->
+    <view wx:if="{{showCRL}}" class="form-item">
+      <view class="form-label">长径/顶臀径<span class="required">*</span></view>
+      <view class="input-suffix">
+        <input
+          class="form-input"
+          type="digit"
+          placeholder="0~5"
+          placeholder-class="form-placeholder"
+          value="{{form.crl}}"
+          bindinput="onCRLInput"
+          bindblur="onCRLBlur"
+          disabled="{{readOnly}}"
+        />
+        <text class="suffix-text">cm</text>
+      </view>
+    </view>
+
+    <!-- 双顶径（胎儿期） -->
+    <view wx:if="{{showFetalFields}}" class="form-item">
+      <view class="form-label">双顶径<span class="required">*</span></view>
+      <view class="input-suffix">
+        <input
+          class="form-input"
+          type="digit"
+          placeholder="0~5.5"
+          placeholder-class="form-placeholder"
+          value="{{form.bpd}}"
+          bindinput="onBPDInput"
+          bindblur="onBPDBlur"
+          disabled="{{readOnly}}"
+        />
+        <text class="suffix-text">cm</text>
+      </view>
+    </view>
+
+    <!-- 腹围（胎儿期） -->
+    <view wx:if="{{showFetalFields}}" class="form-item">
+      <view class="form-label">腹围</view>
+      <view class="input-suffix">
+        <input
+          class="form-input"
+          type="digit"
+          placeholder="0~20"
+          placeholder-class="form-placeholder"
+          value="{{form.abdominalCircumference}}"
+          bindinput="onAbdominalCircumferenceInput"
+          bindblur="onAbdominalCircumferenceBlur"
+          disabled="{{readOnly}}"
+        />
+        <text class="suffix-text">cm</text>
+      </view>
+    </view>
+
+    <!-- 胎盘成熟度（胎儿期） -->
+    <view wx:if="{{showFetalFields}}" class="form-item form-item-column">
+      <view class="form-label">胎盘成熟度<span class="required">*</span></view>
+      <view class="multi-select-wrap">
+        <view
+          class="select-tag {{form.placentaMaturity === item ? 'select-tag-active' : ''}}"
+          wx:for="{{placentaMaturityOptions}}"
+          wx:key="*this"
+          data-value="{{item}}"
+          bindtap="onPlacentaMaturityTap"
+        >{{item}}</view>
+      </view>
+    </view>
+
+    <!-- 胎盘位置（胎儿期，多选-标签式） -->
+    <view wx:if="{{showFetalFields}}" class="form-item form-item-column">
+      <view class="form-label">胎盘位置<span class="required">*</span></view>
+      <view class="multi-select-wrap">
+        <view
+          class="select-tag {{placentaPositionSelectedMap[pos] ? 'select-tag-active' : ''}}"
+          wx:for="{{placentaPositionOptions}}"
+          wx:for-item="pos"
+          wx:key="*this"
+          data-value="{{pos}}"
+          bindtap="onPlacentaPositionToggle"
+        >{{pos}}</view>
+      </view>
+    </view>
+
+    <!-- 胎位（胎儿期且双顶径≥4） -->
+    <view wx:if="{{showFetalPosition}}" class="form-item form-item-column">
+      <view class="form-label">胎位<span class="required">*</span></view>
+      <view class="multi-select-wrap">
+        <view
+          class="select-tag {{form.fetalPosition === item ? 'select-tag-active' : ''}}"
+          wx:for="{{fetalPositionOptions}}"
+          wx:key="*this"
+          data-value="{{item}}"
+          bindtap="onFetalPositionTap"
+        >{{item}}</view>
+      </view>
+    </view>
+
+    <!-- 胎心强度 -->
+    <view class="form-item form-item-column">
+      <view class="form-label">胎心强度</view>
+      <view class="multi-select-wrap">
+        <view
+          class="select-tag {{form.fetalHeartStrength === item ? 'select-tag-active' : ''}}"
+          wx:for="{{heartStrengthOptions}}"
+          wx:key="*this"
+          data-value="{{item}}"
+          bindtap="onHeartStrengthTap"
+        >{{item}}</view>
+      </view>
+    </view>
+
+    <!-- 胎心数值 -->
+    <view class="form-item">
+      <view class="form-label">胎心数值</view>
+      <view class="input-suffix">
+        <input
+          class="form-input"
+          type="digit"
+          placeholder="0~300"
+          placeholder-class="form-placeholder"
+          value="{{form.fetalHeartValue}}"
+          bindinput="onHeartValueInput"
+          bindblur="onHeartValueBlur"
+          disabled="{{readOnly}}"
+        />
+        <text class="suffix-text">bpm</text>
+      </view>
+    </view>
+
+    <!-- 羊水量 -->
+    <view class="form-item form-item-column">
+      <view class="form-label">羊水量</view>
+      <view class="multi-select-wrap">
+        <view
+          class="select-tag {{form.amnioticFluid === item ? 'select-tag-active' : ''}}"
+          wx:for="{{amnioticFluidOptions}}"
+          wx:key="*this"
+          data-value="{{item}}"
+          bindtap="onAmnioticFluidTap"
+        >{{item}}</view>
+      </view>
+    </view>
+
+    <!-- 羊水污染 -->
+    <view class="form-item form-item-column">
+      <view class="form-label">羊水污染</view>
+      <view class="multi-select-wrap">
+        <view
+          class="select-tag {{form.amnioticFluidPollution === item ? 'select-tag-active' : ''}}"
+          wx:for="{{amnioticPollutionOptions}}"
+          wx:key="*this"
+          data-value="{{item}}"
+          bindtap="onAmnioticPollutionTap"
+        >{{item}}</view>
+      </view>
+    </view>
+
+    <!-- 宫颈扩张 -->
+    <view class="form-item form-item-column">
+      <view class="form-label">宫颈扩张</view>
+      <view class="multi-select-wrap">
+        <view
+          class="select-tag {{form.cervicalDilation === item ? 'select-tag-active' : ''}}"
+          wx:for="{{cervicalDilationOptions}}"
+          wx:key="*this"
+          data-value="{{item}}"
+          bindtap="onCervicalDilationTap"
+        >{{item}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 文本字段 -->
+  <view class="form-group">
+    <view class="form-item form-item-column">
+      <view class="form-label">产道异常</view>
+      <textarea
+        class="form-textarea"
+        placeholder="请输入"
+        placeholder-class="form-placeholder"
+        value="{{form.birthCanalAbnormality}}"
+        data-field="birthCanalAbnormality"
+        bindinput="onTextInput"
+        disabled="{{readOnly}}"
+        auto-height
+      />
+    </view>
+    <view class="form-item form-item-column">
+      <view class="form-label">子宫异常</view>
+      <textarea
+        class="form-textarea"
+        placeholder="请输入"
+        placeholder-class="form-placeholder"
+        value="{{form.uterineAbnormality}}"
+        data-field="uterineAbnormality"
+        bindinput="onTextInput"
+        disabled="{{readOnly}}"
+        auto-height
+      />
+    </view>
+    <view class="form-item form-item-column">
+      <view class="form-label">兽医认定高危</view>
+      <textarea
+        class="form-textarea"
+        placeholder="请输入"
+        placeholder-class="form-placeholder"
+        value="{{form.vetHighRisk}}"
+        data-field="vetHighRisk"
+        bindinput="onTextInput"
+        disabled="{{readOnly}}"
+        auto-height
+      />
+    </view>
+    <view class="form-item form-item-column">
+      <view class="form-label">备注</view>
+      <textarea
+        class="form-textarea"
+        placeholder="请输入"
+        placeholder-class="form-placeholder"
+        value="{{form.remark}}"
+        data-field="remark"
+        bindinput="onTextInput"
+        disabled="{{readOnly}}"
+        auto-height
+      />
+    </view>
+  </view>
+
+  <!-- 提交按钮 -->
+  <view wx:if="{{!readOnly}}" class="form-actions">
+    <button class="btn-primary" bindtap="onSubmit">
+      {{mode === 'create' ? '提交' : '保存修改'}}
+    </button>
+  </view>
+
+  <!-- 修改原因弹窗 -->
+  <view wx:if="{{showReasonModal}}" class="modal-mask">
+    <view class="modal-content" catchtap="">
+      <view class="modal-title">请输入修改原因</view>
+      <textarea
+        class="reason-textarea"
+        placeholder="请填写修改原因（必填）"
+        placeholder-class="form-placeholder"
+        value="{{editReason}}"
+        bindinput="onReasonInput"
+        auto-focus
+        auto-height
+      />
+      <view class="modal-actions">
+        <button class="btn-secondary modal-btn" bindtap="onReasonCancel">取消</button>
+        <button class="btn-primary modal-btn" bindtap="onReasonConfirm">确认修改</button>
+      </view>
+    </view>
+  </view>
+</view>

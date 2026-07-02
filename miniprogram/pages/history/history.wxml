@@ -1,0 +1,68 @@
+<view class="history-page">
+  <nav-bar
+    search-key="{{searchKey}}"
+    placeholder="搜索记录ID/操作人"
+    bind:searchchange="onSearchChange"
+    bind:search="onSearch"
+    bind:filter="onFilter"
+  ></nav-bar>
+
+  <view class="list-area">
+    <block wx:if="{{list.length > 0}}">
+      <view class="log-card" wx:for="{{list}}" wx:key="id">
+        <!-- 头部 -->
+        <view class="log-header">
+          <view class="log-operation-tag tag-{{item.operation === '创建' ? 'create' : item.operation === '修改' ? 'update' : 'lock'}}">
+            {{item.operation}}
+          </view>
+          <text class="log-type">{{item.recordType}}</text>
+          <text class="log-time">{{item.operationTime}}</text>
+        </view>
+
+        <!-- 详情 -->
+        <view class="log-body">
+          <view class="log-row">
+            <text class="log-label">记录ID</text>
+            <text class="log-value">{{item.recordId}}</text>
+          </view>
+          <view class="log-row">
+            <text class="log-label">操作人</text>
+            <text class="log-value">{{item.operator}}</text>
+          </view>
+          <view class="log-row">
+            <text class="log-label">操作IP</text>
+            <text class="log-value">{{item.operationIP}}</text>
+          </view>
+          <view wx:if="{{item.reason}}" class="log-row">
+            <text class="log-label">修改原因</text>
+            <text class="log-value">{{item.reason}}</text>
+          </view>
+
+          <!-- 字段变化 -->
+          <view wx:if="{{item.fieldChanges.length > 0}}" class="field-changes">
+            <view class="changes-title">字段变更明细</view>
+            <view class="change-item" wx:for="{{item.fieldChanges}}" wx:for-item="change" wx:key="field">
+              <view class="change-field">{{change.field}}</view>
+              <view class="change-values">
+                <view class="change-old">
+                  <text class="change-label">旧:</text>
+                  <text class="change-text">{{change.oldValue || '(空)'}}</text>
+                </view>
+                <view class="change-arrow">→</view>
+                <view class="change-new">
+                  <text class="change-label">新:</text>
+                  <text class="change-text">{{change.newValue || '(空)'}}</text>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+
+    <view wx:else class="empty-state">
+      <view class="empty-icon">📝</view>
+      <text class="empty-text">暂无修改记录</text>
+    </view>
+  </view>
+</view>

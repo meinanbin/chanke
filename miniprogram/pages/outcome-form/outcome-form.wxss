@@ -1,0 +1,134 @@
+.form-page { min-height: 100vh; padding-bottom: 160rpx; }
+
+.form-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  background: #fff;
+  z-index: 999;
+  box-shadow: 0 1rpx 6rpx rgba(0,0,0,0.04);
+}
+.header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 44px;
+  padding: 0 16rpx;
+}
+.header-back {
+  width: 64rpx; height: 64rpx;
+  display: flex; align-items: center; justify-content: center;
+}
+.back-arrow {
+  width: 20rpx; height: 20rpx;
+  border-left: 4rpx solid #333;
+  border-bottom: 4rpx solid #333;
+  transform: rotate(45deg);
+  margin-left: 6rpx;
+}
+.header-title { font-size: 32rpx; font-weight: 600; color: #333; }
+
+.tip-banner {
+  background: #FFF7E6;
+  padding: 24rpx 32rpx;
+}
+.tip-text { 
+  display: block;
+  font-size: 24rpx; 
+  color: #FAAD14; 
+  line-height: 1.6;
+  word-break: break-word;
+}
+
+.form-group {
+  background: #fff;
+  margin: 24rpx;
+  border-radius: 16rpx;
+  padding: 0 32rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.03);
+}
+.form-item {
+  display: flex;
+  align-items: center;
+  padding: 28rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+  min-height: 48rpx;
+}
+.form-item:last-child { border-bottom: none; }
+.form-item-column {
+  flex-direction: column;
+  align-items: flex-start;
+}
+.form-item-column .form-label { margin-bottom: 16rpx; width: auto; }
+.form-label {
+  width: 220rpx;
+  flex-shrink: 0;
+  font-size: 28rpx;
+  color: #333;
+}
+.required { color: #FF4D4F; margin-left: 4rpx; }
+.form-value {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333;
+}
+.form-placeholder { color: #bbb; }
+
+/* 动物编号：模糊搜索+下拉选择 */
+.form-item-animal {
+  flex-direction: column;
+  align-items: flex-start;
+}
+.form-item-animal .form-label { margin-bottom: 16rpx; width: auto; }
+.animal-search-input {
+  font-size: 32rpx;
+  padding: 20rpx 24rpx;
+  min-height: 56rpx;
+}
+.animal-empty {
+  padding: 40rpx;
+  text-align: center;
+  font-size: 26rpx;
+  color: #999;
+}
+.form-textarea {
+  width: 100%;
+  font-size: 28rpx;
+  color: #333;
+  min-height: 60rpx;
+}
+
+.form-actions { padding: 32rpx; }
+
+/* 弹窗 */
+.modal-mask {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-content {
+  width: 86%;
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 40rpx;
+}
+.modal-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 24rpx;
+  text-align: center;
+}
+.animal-scroll { max-height: 600rpx; }
+.animal-option {
+  padding: 28rpx 24rpx;
+  font-size: 30rpx;
+  color: #333;
+  border-bottom: 1rpx solid #f0f0f0;
+  text-align: center;
+}
+.animal-option:last-child { border-bottom: none; }
+.animal-option:active { background: #f5f6fa; }

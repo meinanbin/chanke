@@ -1,0 +1,48 @@
+<view class="nb-list-page">
+  <nav-bar
+    search-key="{{searchKey}}"
+    placeholder="请输入动物编号"
+    bind:searchchange="onSearchChange"
+    bind:search="onSearch"
+    bind:filter="onFilter"
+  ></nav-bar>
+
+  <view class="list-area">
+    <view class="export-bar" wx:if="{{list.length > 0}}">
+      <text class="export-count">共 {{list.length}} 条记录</text>
+      <view class="export-btn" bindtap="onExport">
+        <text class="export-icon">📥</text>
+        <text>导出Excel</text>
+      </view>
+    </view>
+    <block wx:if="{{list.length > 0}}">
+      <view class="record-card" wx:for="{{list}}" wx:key="id" data-id="{{item.id}}" data-status="{{item.status}}" bindtap="onItemTap">
+        <view class="record-top">
+          <text class="record-animal">{{item.animalId}}</text>
+          <view class="record-tags">
+            <text class="tag tag-info">{{item.operationDate}}</text>
+            <text wx:if="{{item.status === '锁定'}}" class="tag tag-locked">🔒</text>
+          </view>
+        </view>
+        <view class="record-bottom">
+          <text wx:if="{{item.examParts && item.examParts.length > 0}}" class="record-info">
+            检查: {{item.examParts.join('、')}}
+          </text>
+          <text wx:if="{{item.fetalPosition}}" class="record-info">胎位: {{item.fetalPosition}}</text>
+          <text wx:if="{{item.cervicalCheck}}" class="record-info">产道: {{item.cervicalCheck}}</text>
+        </view>
+        <!-- 高风险标签 -->
+        <view class="record-tags-wrap" wx:if="{{item.riskTags && item.riskTags.length > 0}}">
+          <text wx:for="{{item.riskTags}}" wx:for-item="tag" wx:key="*this" class="tag tag-risk">{{tag}}</text>
+        </view>
+      </view>
+    </block>
+
+    <view wx:else class="empty-state">
+      <view class="empty-icon">🩺</view>
+      <text class="empty-text">暂无非B超检查记录</text>
+    </view>
+  </view>
+
+  <view class="fab" bindtap="onCreate">+</view>
+</view>

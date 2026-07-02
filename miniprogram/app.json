@@ -1,0 +1,27 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/summary/summary",
+    "pages/summary-detail/summary-detail",
+    "pages/b-ultrasound/b-ultrasound",
+    "pages/b-ultrasound-form/b-ultrasound-form",
+    "pages/non-b-ultrasound/non-b-ultrasound",
+    "pages/non-b-ultrasound-form/non-b-ultrasound-form",
+    "pages/outcome/outcome",
+    "pages/outcome-form/outcome-form",
+    "pages/history/history",
+    "pages/profile/profile",
+    "pages/admin-lists/admin-lists"
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTitleText": "产科检查管理",
+    "navigationBarTextStyle": "black",
+    "navigationStyle": "custom"
+  },
+  "style": "v2",
+  "componentFramework": "glass-easel",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

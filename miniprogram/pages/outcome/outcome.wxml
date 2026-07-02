@@ -1,0 +1,35 @@
+<view class="outcome-list-page">
+  <nav-bar
+    search-key="{{searchKey}}"
+    placeholder="请输入动物编号"
+    bind:searchchange="onSearchChange"
+    bind:search="onSearch"
+    bind:filter="onFilter"
+  ></nav-bar>
+
+  <view class="list-area">
+    <block wx:if="{{list.length > 0}}">
+      <view class="record-card" wx:for="{{list}}" wx:key="id">
+        <view class="record-top">
+          <text class="record-animal">{{item.animalId}}</text>
+          <view class="record-tags">
+            <text class="tag tag-{{item.type === '正常' ? 'normal' : 'abnormal'}}">{{item.type}}</text>
+            <text wx:if="{{item.isNormal === '否'}}" class="tag tag-warning">非正常</text>
+          </view>
+        </view>
+        <view class="record-bottom">
+          <text class="record-date">结局日期: {{item.outcomeDate}}</text>
+          <text wx:if="{{item.abnormalDescription}}" class="record-desc">{{item.abnormalDescription}}</text>
+          <text wx:if="{{item.remark}}" class="record-remark">备注: {{item.remark}}</text>
+        </view>
+      </view>
+    </block>
+
+    <view wx:else class="empty-state">
+      <view class="empty-icon">🏷️</view>
+      <text class="empty-text">暂无妊娠结局记录</text>
+    </view>
+  </view>
+
+  <view class="fab" bindtap="onCreate">+</view>
+</view>

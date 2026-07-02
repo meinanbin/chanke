@@ -1,0 +1,113 @@
+.history-page { min-height: 100vh; }
+.list-area { padding: 24rpx; }
+
+.log-card {
+  background: #fff;
+  border-radius: 16rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.05);
+  overflow: hidden;
+}
+
+.log-header {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 24rpx 32rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+  background: #fafbfc;
+}
+.log-operation-tag {
+  font-size: 22rpx;
+  padding: 4rpx 16rpx;
+  border-radius: 8rpx;
+  font-weight: 500;
+}
+.tag-create { background: #F6FFED; color: #52C41A; }
+.tag-update { background: #F0F5FF; color: #4A90D9; }
+.tag-lock { background: #FFF7E6; color: #FAAD14; }
+.log-type {
+  font-size: 26rpx;
+  color: #333;
+  font-weight: 500;
+}
+.log-time {
+  font-size: 24rpx;
+  color: #999;
+  margin-left: auto;
+}
+
+.log-body {
+  padding: 24rpx 32rpx;
+}
+.log-row {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 16rpx;
+}
+.log-row:last-child { margin-bottom: 0; }
+.log-label {
+  width: 140rpx;
+  flex-shrink: 0;
+  font-size: 26rpx;
+  color: #999;
+}
+.log-value {
+  flex: 1;
+  font-size: 26rpx;
+  color: #333;
+}
+
+/* 字段变更 */
+.field-changes {
+  margin-top: 20rpx;
+  padding-top: 20rpx;
+  border-top: 1rpx solid #f0f0f0;
+}
+.changes-title {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 16rpx;
+}
+.change-item {
+  background: #f9fafb;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  margin-bottom: 12rpx;
+}
+.change-field {
+  font-size: 26rpx;
+  color: #4A90D9;
+  font-weight: 500;
+  margin-bottom: 12rpx;
+}
+.change-values {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  flex-wrap: wrap;
+}
+.change-old, .change-new {
+  flex: 1;
+  min-width: 200rpx;
+}
+.change-label {
+  font-size: 22rpx;
+  color: #999;
+  margin-right: 8rpx;
+}
+.change-old .change-text {
+  font-size: 26rpx;
+  color: #999;
+  text-decoration: line-through;
+}
+.change-new .change-text {
+  font-size: 26rpx;
+  color: #FF4D4F;
+  font-weight: 500;
+}
+.change-arrow {
+  font-size: 28rpx;
+  color: #ccc;
+}

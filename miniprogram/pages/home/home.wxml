@@ -1,0 +1,76 @@
+<view class="home-page">
+  <!-- 自定义导航栏 -->
+  <view class="home-header" style="padding-top: {{statusBarHeight}}px;">
+    <view class="header-content">
+      <view class="header-title">
+        <text class="app-title">产科检查管理</text>
+      </view>
+      <view class="header-avatar" bindtap="onProfileTap">
+        <view class="avatar-circle">
+          <text class="avatar-text">{{userName ? userName[0] : '用'}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 功能菜单区域 -->
+  <view class="menu-section">
+    <view class="section-title">功能菜单</view>
+    <view class="menu-grid">
+      <view
+        class="menu-item"
+        wx:for="{{menus}}"
+        wx:key="key"
+        data-url="{{item.url}}"
+        bindtap="onMenuTap"
+      >
+        <view class="menu-icon-wrap" style="background: {{item.bgColor}};">
+          <!-- 列表/档案图标 -->
+          <view wx:if="{{item.icon === 'list'}}" class="icon-list" style="border-color: {{item.color}};">
+            <view class="icon-list-line" style="background: {{item.color}};"></view>
+            <view class="icon-list-line" style="background: {{item.color}};"></view>
+            <view class="icon-list-line" style="background: {{item.color}};"></view>
+          </view>
+          <!-- B超图标 -->
+          <view wx:elif="{{item.icon === 'ultrasound'}}" class="icon-ultrasound">
+            <view class="ultrasound-screen" style="border-color: {{item.color}};">
+              <view class="ultrasound-wave" style="border-color: {{item.color}};"></view>
+            </view>
+            <view class="ultrasound-stand" style="background: {{item.color}};"></view>
+          </view>
+          <!-- 听诊器图标 -->
+          <view wx:elif="{{item.icon === 'stethoscope'}}" class="icon-stethoscope">
+            <view class="stetho-head" style="border-color: {{item.color}};"></view>
+            <view class="stetho-tube" style="background: {{item.color}};"></view>
+            <view class="stetho-body" style="border-color: {{item.color}};"></view>
+          </view>
+          <!-- 旗帜图标 -->
+          <view wx:elif="{{item.icon === 'flag'}}" class="icon-flag">
+            <view class="flag-pole" style="background: {{item.color}};"></view>
+            <view class="flag-banner" style="background: {{item.color}};"></view>
+          </view>
+        </view>
+        <text class="menu-title">{{item.title}}</text>
+        <text class="menu-subtitle">{{item.subtitle}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 快捷入口 -->
+  <view class="quick-links">
+    <view class="quick-link" bindtap="onProfileTap">
+      <view class="quick-link-icon" style="background: #F6FFED;">
+        <view class="icon-profile">
+          <view class="profile-head" style="background: #52C41A;"></view>
+          <view class="profile-body" style="background: #52C41A;"></view>
+        </view>
+      </view>
+      <text class="quick-link-text">个人中心</text>
+    </view>
+  </view>
+
+  <!-- 底部信息 -->
+  <view class="home-footer">
+    <text class="footer-text">产科检查管理小程序 v1.0.0</text>
+  </view>
+</view>
