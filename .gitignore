@@ -1,0 +1,23 @@
+node_modules/
+*/node_modules/
+*.db
+*.db-journal
+server/obstetric.db
+server/obstetric.db-*
+*.zip
+*.tar.gz
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+*.swo
+#WorkBuddy 内部数据
+.workbuddy/
+# 测试脚本
+test-*.js
+#临时文件
+*.log
+.env
+.env.local
