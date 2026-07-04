@@ -8,11 +8,16 @@
   ></nav-bar>
 
   <view class="list-area">
-    <block wx:if="{{list.length > 0}}">
+    <!-- 加载中 -->
+    <view wx:if="{{loading}}" class="loading-state">
+      <text>加载中...</text>
+    </view>
+
+    <block wx:elif="{{list.length > 0}}">
       <view class="log-card" wx:for="{{list}}" wx:key="id">
         <!-- 头部 -->
         <view class="log-header">
-          <view class="log-operation-tag tag-{{item.operation === '创建' ? 'create' : item.operation === '修改' ? 'update' : 'lock'}}">
+          <view class="log-operation-tag tag-{{item.operation === '创建' ? 'create' : item.operation === '修改' ? 'update' : item.operation === '删除' ? 'delete' : 'lock'}}">
             {{item.operation}}
           </view>
           <text class="log-type">{{item.recordType}}</text>
@@ -39,7 +44,7 @@
           </view>
 
           <!-- 字段变化 -->
-          <view wx:if="{{item.fieldChanges.length > 0}}" class="field-changes">
+          <view wx:if="{{item.fieldChanges && item.fieldChanges.length > 0}}" class="field-changes">
             <view class="changes-title">字段变更明细</view>
             <view class="change-item" wx:for="{{item.fieldChanges}}" wx:for-item="change" wx:key="field">
               <view class="change-field">{{change.field}}</view>

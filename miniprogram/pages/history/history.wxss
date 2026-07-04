@@ -1,6 +1,15 @@
 .history-page { min-height: 100vh; }
 .list-area { padding: 24rpx; }
 
+.loading-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 80rpx 0;
+  color: #999;
+  font-size: 28rpx;
+}
+
 .log-card {
   background: #fff;
   border-radius: 16rpx;
@@ -25,6 +34,7 @@
 }
 .tag-create { background: #F6FFED; color: #52C41A; }
 .tag-update { background: #F0F5FF; color: #4A90D9; }
+.tag-delete { background: #FFF1F0; color: #FF4D4F; }
 .tag-lock { background: #FFF7E6; color: #FAAD14; }
 .log-type {
   font-size: 26rpx;
