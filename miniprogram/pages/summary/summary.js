@@ -16,7 +16,11 @@ Page({
   },
 
   onShow() {
+    // 先用本地缓存即时渲染，再异步从服务器刷新
     this.loadData()
+    storage.refreshSummaryList().then(() => {
+      this.loadData()
+    }).catch(() => {})
   },
 
   loadData() {

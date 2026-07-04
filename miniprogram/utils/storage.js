@@ -71,11 +71,12 @@ function ensureLocalCacheStructure() {
  * 从远程服务器全量同步所有数据到本地缓存
  */
 function syncFromServer() {
+  // 仅获取动物列表和汇总，详细记录由 syncDetailedDataFromSummary 逐只拉取
+  // 注意：不能传空 animalId 给 /b-records/animal/:animalId，否则路由匹配到
+  // /b-records/:id（id='animal'），返回 {success:false}，导致 Promise.all 整体 reject
   return Promise.all([
     api.fetchAllAnimals(),
-    api.fetchBRecordsByAnimal('', 'asc'),  // 获取全部需特殊处理
-    api.fetchNonBRecordsByAnimal('', 'asc'),
-    api.fetchSummaryList()  // 通过汇总接口间接获取
+    api.fetchSummaryList()
   ]).then(([animals]) => {
     wx.setStorageSync(STORAGE_KEYS.ANIMALS, animals || [])
     // 通过汇总数据重建本地缓存（汇总包含所有关联数据）
@@ -118,10 +119,9 @@ function syncDetailedDataFromSummary() {
     const detailPromises = animalIds.map(id => {
       return Promise.all([
         api.fetchBRecordsByAnimal(id, 'asc'),
-        api.fetchBRecordsByAnimal(id, 'desc'),
         api.fetchNonBRecordsByAnimal(id, 'asc'),
         api.fetchOutcomeRecordsByAnimal(id)
-      ]).then(([bAsc, bDesc, nbAsc, outcomes]) => {
+      ]).then(([bAsc, nbAsc, outcomes]) => {
         // 用正序结果更新全局B超缓存（去重）
         (bAsc || []).forEach(r => {
           if (!allBRecords.find(x => x.id === r.id)) allBRecords.push(r)
@@ -629,26 +629,33 @@ function refreshSummaryList() {
     }))
     wx.setStorageSync(STORAGE_KEYS.ANIMALS, animals)
 
-    // 重建B超/非B超/结局缓存
-    const allBRecords = []
-    const allNonBRecords = []
-    const allOutcomes = []
+    // 合并（而非替换）B超/非B超/结局缓存
+    // summary 只返回每只动物的最新一条记录，直接替换会丢失历史记录
+    const existingBRecords = getAllBRecords()
+    const existingNonBRecords = getAllNonBRecords()
+    const existingOutcomes = getAllOutcomeRecords()
 
     list.forEach(item => {
       if (item.latestBRecord) {
-        if (!allBRecords.find(x => x.id === item.latestBRecord.id)) allBRecords.push(item.latestBRecord)
+        const idx = existingBRecords.findIndex(x => x.id === item.latestBRecord.id)
+        if (idx >= 0) existingBRecords[idx] = item.latestBRecord
+        else existingBRecords.push(item.latestBRecord)
       }
       if (item.latestNonBRecord) {
-        if (!allNonBRecords.find(x => x.id === item.latestNonBRecord.id)) allNonBRecords.push(item.latestNonBRecord)
+        const idx = existingNonBRecords.findIndex(x => x.id === item.latestNonBRecord.id)
+        if (idx >= 0) existingNonBRecords[idx] = item.latestNonBRecord
+        else existingNonBRecords.push(item.latestNonBRecord)
       }
       if (item.latestOutcome) {
-        if (!allOutcomes.find(x => x.id === item.latestOutcome.id)) allOutcomes.push(item.latestOutcome)
+        const idx = existingOutcomes.findIndex(x => x.id === item.latestOutcome.id)
+        if (idx >= 0) existingOutcomes[idx] = item.latestOutcome
+        else existingOutcomes.push(item.latestOutcome)
       }
     })
 
-    wx.setStorageSync(STORAGE_KEYS.B_RECORDS, allBRecords)
-    wx.setStorageSync(STORAGE_KEYS.NON_B_RECORDS, allNonBRecords)
-    wx.setStorageSync(STORAGE_KEYS.OUTCOME_RECORDS, allOutcomes)
+    wx.setStorageSync(STORAGE_KEYS.B_RECORDS, existingBRecords)
+    wx.setStorageSync(STORAGE_KEYS.NON_B_RECORDS, existingNonBRecords)
+    wx.setStorageSync(STORAGE_KEYS.OUTCOME_RECORDS, existingOutcomes)
 
     return list
   }).catch(err => {

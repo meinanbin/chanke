@@ -14,6 +14,9 @@ Page({
 
   onShow() {
     this.loadData()
+    storage.refreshSummaryList().then(() => {
+      this.loadData()
+    }).catch(() => {})
   },
 
   loadData() {

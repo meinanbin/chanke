@@ -21,6 +21,9 @@ Page({
   onShow() {
     if (this.data.animalId) {
       this.loadData()
+      storage.refreshSummaryList().then(() => {
+        this.loadData()
+      }).catch(() => {})
     }
   },
 
