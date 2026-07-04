@@ -229,7 +229,17 @@ function calcStandardAge(animalId, currentDate, calculatedAge, historyRecords) {
   // 筛选该动物的所有B超记录（按时间正序）
   const records = (historyRecords || [])
     .filter(r => r.animalId === animalId)
-    .sort((a, b) => new Date(a.operationDate) - new Date(b.operationDate))
+    .sort((a, b) => {
+      // Use string comparison: operationDate "YYYY-MM-DD" and createdAt
+      // "YYYYMMDD HH:MM:SS" are both lexicographically sortable
+      const opA = a.operationDate || ''
+      const opB = b.operationDate || ''
+      if (opA !== opB) return opA < opB ? -1 : 1
+      const ctA = a.createdAt || ''
+      const ctB = b.createdAt || ''
+      if (ctA !== ctB) return ctA < ctB ? -1 : 1
+      return 0
+    })
 
   if (records.length === 0) {
     // 场景A：初次怀孕

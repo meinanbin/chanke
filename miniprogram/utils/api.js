@@ -6,7 +6,7 @@
  * 生产环境：需在微信公众平台配置服务器域名（HTTPS）
  */
 
-const API_BASE = 'http://localhost:3000/api'
+const API_BASE = 'http://139.199.71.127/api'
 
 /**
  * 通用请求方法（Promise 封装）

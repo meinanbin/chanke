@@ -21,7 +21,16 @@ Page({
   loadData() {
     const records = storage.getAllBRecords()
     // 按时间倒序
-    records.sort((a, b) => new Date(b.operationDate) - new Date(a.operationDate))
+    records.sort((a, b) => {
+      // String comparison avoids Invalid Date from non-ISO createdAt format
+      const opA = a.operationDate || ''
+      const opB = b.operationDate || ''
+      if (opA !== opB) return opB < opA ? -1 : 1
+      const ctA = a.createdAt || ''
+      const ctB = b.createdAt || ''
+      if (ctA !== ctB) return ctB < ctA ? -1 : 1
+      return 0
+    })
     this.setData({ rawList: records })
     this.applyFilter()
   },

@@ -164,7 +164,18 @@ function getBRecordsByAnimal(animalId) {
   const records = getAllBRecords()
   return records
     .filter(r => r.animalId === animalId)
-    .sort((a, b) => new Date(a.operationDate) - new Date(b.operationDate))
+    .sort((a, b) => {
+      // operationDate: "YYYY-MM-DD", createdAt: "YYYYMMDD HH:MM:SS"
+      // Both formats are lexicographically sortable; avoid new Date() which
+      // returns Invalid Date for the non-ISO createdAt format
+      const opA = a.operationDate || ''
+      const opB = b.operationDate || ''
+      if (opA !== opB) return opA < opB ? -1 : 1
+      const ctA = a.createdAt || ''
+      const ctB = b.createdAt || ''
+      if (ctA !== ctB) return ctA < ctB ? -1 : 1
+      return 0
+    })
 }
 
 function getBRecordsByAnimalDesc(animalId) {
@@ -172,9 +183,16 @@ function getBRecordsByAnimalDesc(animalId) {
   return records
     .filter(r => r.animalId === animalId)
     .sort((a, b) => {
-      const dateDiff = new Date(b.operationDate) - new Date(a.operationDate)
-      if (dateDiff !== 0) return dateDiff
-      return new Date(b.createdAt) - new Date(a.createdAt)
+      // operationDate: "YYYY-MM-DD", createdAt: "YYYYMMDD HH:MM:SS"
+      // Both formats are lexicographically sortable; avoid new Date() which
+      // returns Invalid Date for the non-ISO createdAt format
+      const opA = a.operationDate || ''
+      const opB = b.operationDate || ''
+      if (opA !== opB) return opB < opA ? -1 : 1
+      const ctA = a.createdAt || ''
+      const ctB = b.createdAt || ''
+      if (ctA !== ctB) return ctB < ctA ? -1 : 1
+      return 0
     })
 }
 
@@ -191,7 +209,18 @@ function getNonBRecordsByAnimal(animalId) {
   const records = getAllNonBRecords()
   return records
     .filter(r => r.animalId === animalId)
-    .sort((a, b) => new Date(a.operationDate) - new Date(b.operationDate))
+    .sort((a, b) => {
+      // operationDate: "YYYY-MM-DD", createdAt: "YYYYMMDD HH:MM:SS"
+      // Both formats are lexicographically sortable; avoid new Date() which
+      // returns Invalid Date for the non-ISO createdAt format
+      const opA = a.operationDate || ''
+      const opB = b.operationDate || ''
+      if (opA !== opB) return opA < opB ? -1 : 1
+      const ctA = a.createdAt || ''
+      const ctB = b.createdAt || ''
+      if (ctA !== ctB) return ctA < ctB ? -1 : 1
+      return 0
+    })
 }
 
 function getNonBRecordsByAnimalDesc(animalId) {
@@ -199,9 +228,16 @@ function getNonBRecordsByAnimalDesc(animalId) {
   return records
     .filter(r => r.animalId === animalId)
     .sort((a, b) => {
-      const dateDiff = new Date(b.operationDate) - new Date(a.operationDate)
-      if (dateDiff !== 0) return dateDiff
-      return new Date(b.createdAt) - new Date(a.createdAt)
+      // operationDate: "YYYY-MM-DD", createdAt: "YYYYMMDD HH:MM:SS"
+      // Both formats are lexicographically sortable; avoid new Date() which
+      // returns Invalid Date for the non-ISO createdAt format
+      const opA = a.operationDate || ''
+      const opB = b.operationDate || ''
+      if (opA !== opB) return opB < opA ? -1 : 1
+      const ctA = a.createdAt || ''
+      const ctB = b.createdAt || ''
+      if (ctA !== ctB) return ctB < ctA ? -1 : 1
+      return 0
     })
 }
 
@@ -218,7 +254,13 @@ function getOutcomeRecordsByAnimalDesc(animalId) {
   const records = getAllOutcomeRecords()
   return records
     .filter(r => r.animalId === animalId)
-    .sort((a, b) => new Date(b.outcomeDate) - new Date(a.outcomeDate))
+    .sort((a, b) => {
+      // outcomeDate: "YYYY-MM-DD" — lexicographically sortable
+      const odA = a.outcomeDate || ''
+      const odB = b.outcomeDate || ''
+      if (odA !== odB) return odB < odA ? -1 : 1
+      return 0
+    })
 }
 
 // ========== 标准胎龄与超期标签（本地缓存计算） ==========
